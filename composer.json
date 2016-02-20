@@ -2,5 +2,12 @@
     "name": "stronglab/yii2-dashboard",
     "description": "StrongLab Dashboard for apps",
     "homepage": "http://22info.ru",
-    "type": "project"
+    "type": "project",
+    "require": {
+        "yiisoft/yii2": "*",
+        "yiisoft/yii2-bootstrap": "*"
+    },
+    "autoload": {
+        "psr-4": { "stronglab\\yii2\\dashboard\\": "" }
+    }
 }
