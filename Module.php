@@ -37,8 +37,8 @@ class Module extends \yii\base\Module {
 
         //set components
         $this->setComponents([
-            'Handler' => [
-                'class' => 'stronglab\yii2\dashboard\components\ModulesHandler',
+            'config' => [
+                'class' => 'stronglab\yii2\dashboard\components\ConfigComponent',
                 'modules' => $this->modules,
             ],
         ]);

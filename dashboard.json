@@ -1,5 +1,7 @@
 {
     "name": "Dasboard simple config",
+    "title": "Dashboard",
+    "priority": 10,
     "routes": [
         {
             "route": "",

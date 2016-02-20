@@ -4,7 +4,6 @@ namespace stronglab\yii2\dashboard\components;
 
 use Yii;
 use yii\base\Component;
-use yii\base\Module;
 use yii\helpers\Json;
 use yii\base\Exception;
 
@@ -13,7 +12,7 @@ use yii\base\Exception;
  *
  * @author strong
  */
-class ModulesHandler extends Component {
+class ConfigComponent extends Component {
 
     /**
      * Non-module dashboard configuration key in modules array 
@@ -22,9 +21,9 @@ class ModulesHandler extends Component {
 
     /**
      *
-     * @var array List availavle modules
+     * @var array List availavle configs
      */
-    private $_modules = [];
+    private $_configs = [];
 
     /**
      * @inheritdoc
@@ -61,18 +60,18 @@ class ModulesHandler extends Component {
         $configFile = $module->getBasePath() . '/dashboard.json';
         $config = $this->getConfig($configFile);
         if ($config !== false) {
-            $this->_modules[$moduleName] = $config;
+            $this->_configs[$moduleName] = $config;
         }
         return $this;
     }
 
     /**
-     * Get available dashbord modules
+     * Get available dashbord modules config
      * 
      * @return array
      */
-    public function getModules() {
-        return $this->_modules;
+    public function getConfigs() {
+        return $this->_configs;
     }
 
     /**
@@ -84,14 +83,14 @@ class ModulesHandler extends Component {
         $configFile = Yii::getAlias('@app') . '/dashboard.json';
         $config = $this->getConfig($configFile);
         if ($config !== false) {
-            $this->_modules[self::APP_CONFIG_KEY] = $config;
+            $this->_configs[self::APP_CONFIG_KEY] = $config;
         }
     }
 
     /**
      * Get dashboard config
      * 
-     * @param array $module
+     * @param string $configFile
      * @return array|bool config data or FALSE
      */
     protected function getConfig($configFile) {
@@ -104,7 +103,7 @@ class ModulesHandler extends Component {
         }
         $config = Json::decode($content);
         $this->validateConfig($config);
-        return $config;
+        return $this->filterConfig($config);
     }
 
     /**
@@ -131,6 +130,22 @@ class ModulesHandler extends Component {
                 throw new Exception("Syntax error: field 'route' not found in route '" . $route . "'");
             }
         }
+    }
+
+    /**
+     * Filter config params
+     * 
+     * @param array $config
+     * @return array
+     */
+    protected function filterConfig($config) {
+        if (!isset($config['title'])) {
+            $config['title'] = $config['name'];
+        }
+        if (!isset($config['priority'])) {
+            $config['priority'] = 10;
+        }
+        return $config;
     }
 
 }

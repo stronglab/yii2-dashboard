@@ -12,7 +12,7 @@ use yii\web\Controller;
 class DefaultController extends Controller {
 
     public function actionIndex() {
-        var_dump($this->module->Handler->getModules());
+        var_dump($this->module->config->getConfigs());
     }
 
 }
