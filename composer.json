@@ -3,11 +3,19 @@
     "description": "StrongLab Dashboard for apps",
     "homepage": "http://22info.ru",
     "type": "project",
+    "authors": [
+        {
+            "name": "strong",
+            "email": "strong.barnaul@gmail.com"
+        }
+    ],
     "require": {
         "yiisoft/yii2": "*",
         "yiisoft/yii2-bootstrap": "*"
     },
     "autoload": {
-        "psr-4": { "stronglab\\yii2\\dashboard\\": "" }
+        "psr-4": {
+            "stronglab\\yii2\\dashboard\\": ""
+        }
     }
 }
