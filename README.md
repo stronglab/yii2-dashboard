@@ -1,1 +1,1 @@
-# yii2-admin-panel
+# yii2-dashboard
