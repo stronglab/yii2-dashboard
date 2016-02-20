@@ -28,6 +28,8 @@ class Module extends \yii\base\Module {
      */
     public function init() {
 
+        parent::init();
+
         // set alias
         $this->setAliases([
             $this->alias => __DIR__,

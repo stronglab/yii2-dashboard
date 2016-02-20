@@ -12,7 +12,7 @@ use yii\web\Controller;
 class DefaultController extends Controller {
 
     public function actionIndex() {
-        return 'Hello World!!!';
+        var_dump($this->module->Handler->getModules());
     }
 
 }

@@ -1,0 +1,9 @@
+{
+    "name": "Dasboard simple config",
+    "routes": [
+        {
+            "route": "",
+            "title": ""
+        }
+    ]
+}
