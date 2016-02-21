@@ -4,8 +4,8 @@
     "priority": 10,
     "routes": [
         {
-            "route": "",
-            "title": ""
+            "route": "controller/action",
+            "title": "Title"
         }
     ]
 }
