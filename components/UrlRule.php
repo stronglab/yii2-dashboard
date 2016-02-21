@@ -17,6 +17,9 @@ class UrlRule extends \yii\web\UrlRule {
      */
     public $dashboardId = 'dashboard';
 
+    /**
+     * @inheritdoc
+     */
     public function init() {
         $this->pattern = $this->dashboardId . '/route/<m>/<c>/<a>';
         $this->route = $this->dashboardId . '/default/route';
@@ -26,6 +29,14 @@ class UrlRule extends \yii\web\UrlRule {
         parent::init();
     }
 
+    /**
+     * Replace dashboard routes in url
+     * 
+     * @param object $manager
+     * @param string $route
+     * @param array $params
+     * @return bool
+     */
     public function createUrl($manager, $route, $params) {
         if (Yii::$app->getModule($this->dashboardId)->config->isDashboardRoute($route)) {
             $extRoute = Yii::$app->getModule($this->dashboardId)->config->getRoute($route);
@@ -34,6 +45,12 @@ class UrlRule extends \yii\web\UrlRule {
         return parent::createUrl($manager, $route, $params);
     }
 
+    /**
+     * Generate params array for createUrl method
+     * 
+     * @param string $route
+     * @return array
+     */
     protected function paramzRoute($route) {
         $route = explode('/', $route);
         $m = isset($route[0]) ? $route[0] : 0;
