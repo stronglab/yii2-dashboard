@@ -11,8 +11,17 @@ use yii\web\Controller;
  */
 class DefaultController extends Controller {
 
+    public function beforeAction($action) {
+        return parent::beforeAction($action);
+    }
+
     public function actionIndex() {
         var_dump($this->module->config->getConfigs());
+    }
+
+    public function actionRoute($m, $c, $a) {
+        $route = $m . '/' . $c . ($a != 0 ? '/' . $a : '');
+        return \Yii::$app->runAction($route);
     }
 
 }

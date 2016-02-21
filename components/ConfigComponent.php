@@ -26,6 +26,12 @@ class ConfigComponent extends Component {
     private $_configs = [];
 
     /**
+     *
+     * @var array available routes 
+     */
+    private $_routes = [];
+
+    /**
      * @inheritdoc
      */
     public function init() {
@@ -72,6 +78,59 @@ class ConfigComponent extends Component {
      */
     public function getConfigs() {
         return $this->_configs;
+    }
+
+    /**
+     * Get All dashboard routes
+     * 
+     * @return array
+     */
+    public function getRoutes() {
+        if (empty($this->_routes)) {
+            foreach ($this->_configs as $moduleName => $config) {
+                $this->_routes += $this->getRoutesList($config, $moduleName);
+            }
+        }
+        return $this->_routes;
+    }
+
+    /**
+     * Check is dashboard route
+     * 
+     * @param string $route
+     * @return bool
+     */
+    public function isDashboardRoute($route) {
+        return isset($this->routes[$route]);
+    }
+
+    /**
+     * Get full route
+     * 
+     * @param string $route
+     * @return string|null
+     */
+    public function getRoute($route) {
+        if ($this->isDashboardRoute($route)) {
+            return $this->_routes[$route];
+        }
+        return null;
+    }
+
+    /**
+     * Get routes list by config
+     * 
+     * @param array $config
+     * @param string $moduleName
+     * @return array
+     */
+    protected function getRoutesList($config, $moduleName) {
+        $routes = [];
+        foreach ($config['routes'] as $route) {
+            $module = $moduleName == self::APP_CONFIG_KEY ? '' : $moduleName . '/';
+            $routes[$module . $route['route']] = $module . $route['route'];
+        }
+        return $routes;
     }
 
     /**
