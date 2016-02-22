@@ -172,13 +172,18 @@ class ConfigComponent extends Component {
         if (empty($routes)) {
             return;
         }
-        foreach ($routes as &$route) {
+        $result = [];
+        foreach ($routes as $route) {
+            if ($route['title'] === false) {
+                continue;
+            }
             $route['route'] = isset($this->routes[$route['route']]) ? $this->routes[$route['route']] : $route['route'];
             $route['route'] = $this->dashboardId . '/' . $route['route'];
             $route['icon'] = isset($route['icon']) ? $route['icon'] : $this->glyphiconDefault;
+            $result[] = $route;
         }
         return new ArrayDataProvider([
-            'allModels' => $routes,
+            'allModels' => $result,
         ]);
     }
 
