@@ -3,6 +3,7 @@
 namespace stronglab\yii2\dashboard\components;
 
 use Yii;
+use stronglab\yii2\dashboard\components\ConfigComponent;
 
 /**
  * UrlRules
@@ -21,10 +22,10 @@ class UrlRule extends \yii\web\UrlRule {
      * @inheritdoc
      */
     public function init() {
-        $this->pattern = $this->dashboardId . '/<m>/<c>/<a>';
+        $this->pattern = $this->dashboardId . '/<' . ConfigComponent::FIRST_SEGMENT . '>/<' . ConfigComponent::SECOND_SEGMENT . '>/<' . ConfigComponent::THIRD_SEGMENT . '>';
         $this->route = $this->dashboardId . '/default/index';
         $this->defaults = [
-            'a' => 0,
+            ConfigComponent::THIRD_SEGMENT => 0,
         ];
         parent::init();
     }
@@ -54,10 +55,10 @@ class UrlRule extends \yii\web\UrlRule {
      */
     protected function paramzRoute($route) {
         $route = explode('/', $route);
-        $m = isset($route[0]) ? $route[0] : 0;
-        $c = isset($route[1]) ? $route[1] : 0;
-        $a = isset($route[2]) ? $route[2] : 0;
-        return ['m' => $m, 'c' => $c, 'a' => $a];
+        $first = isset($route[0]) ? $route[0] : 0;
+        $second = isset($route[1]) ? $route[1] : 0;
+        $third = isset($route[2]) ? $route[2] : 0;
+        return [ConfigComponent::FIRST_SEGMENT => $first, ConfigComponent::SECOND_SEGMENT => $second, ConfigComponent::THIRD_SEGMENT => $third];
     }
 
     /**
@@ -67,14 +68,14 @@ class UrlRule extends \yii\web\UrlRule {
      * @return string
      */
     protected function prepareRoute($route) {
-        $getParam = \Yii::$app->request->get();
-        if (!isset($getParam['a'], $getParam['c'], $getParam['m'])) {
+        $getParam = Yii::$app->request->get();
+        if (!isset($getParam[ConfigComponent::FIRST_SEGMENT], $getParam[ConfigComponent::SECOND_SEGMENT], $getParam[ConfigComponent::THIRD_SEGMENT])) {
             return $route;
         }
-        if ($getParam['a'] === 0) {
-            $route = str_replace($this->dashboardId . '/default', $getParam['m'], $route);
+        if ($getParam[ConfigComponent::THIRD_SEGMENT] === 0) {
+            $route = str_replace($this->dashboardId . '/default', $getParam[ConfigComponent::FIRST_SEGMENT], $route);
         } else {
-            $route = str_replace($this->dashboardId . '/default', $getParam['m'] . '/' . $getParam['c'], $route);
+            $route = str_replace($this->dashboardId . '/default', $getParam[ConfigComponent::FIRST_SEGMENT] . '/' . $getParam[ConfigComponent::SECOND_SEGMENT], $route);
         }
         return $route;
     }

@@ -21,6 +21,21 @@ class ConfigComponent extends Component {
     const APP_CONFIG_KEY = '_application';
 
     /**
+     * First route variable
+     */
+    const FIRST_SEGMENT = '__F';
+
+    /**
+     * Second route variable
+     */
+    const SECOND_SEGMENT = '__S';
+
+    /**
+     * Third route variable
+     */
+    const THIRD_SEGMENT = '__T';
+
+    /**
      * 
      * @var string Default icon for dashboard
      */
