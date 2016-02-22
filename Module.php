@@ -14,6 +14,12 @@ class Module extends \yii\base\Module {
     public $alias = '@dashboard';
 
     /**
+     * 
+     * @var string Default icon for dashboard
+     */
+    public $glyphiconDefault = 'cog';
+
+    /**
      *
      * @var array List available module for dashboard
      */
@@ -36,6 +42,8 @@ class Module extends \yii\base\Module {
             'config' => [
                 'class' => 'stronglab\yii2\dashboard\components\ConfigComponent',
                 'modules' => $this->modules,
+                'glyphiconDefault' => $this->glyphiconDefault,
+                'dashboardId' => $this->id,
             ],
         ]);
     }

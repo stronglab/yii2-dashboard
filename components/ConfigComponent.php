@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Component;
 use yii\helpers\Json;
 use yii\base\Exception;
+use yii\data\ArrayDataProvider;
 
 /**
  * ModulesHandler
@@ -15,13 +16,25 @@ use yii\base\Exception;
 class ConfigComponent extends Component {
 
     /**
-     * Non-module dashboard configuration key in modules array 
+     * Non-module dashboard configuration key in configs array 
      */
     const APP_CONFIG_KEY = '_application';
 
     /**
+     * 
+     * @var string Default icon for dashboard
+     */
+    public $glyphiconDefault = 'cog';
+
+    /**
      *
-     * @var array List availavle configs
+     * @var string Dashboard module ID
+     */
+    public $dashboardId = 'dashboard';
+
+    /**
+     *
+     * @var array List available configs
      */
     private $_configs = [];
 
@@ -118,6 +131,58 @@ class ConfigComponent extends Component {
     }
 
     /**
+     * Return data provider for bulid dashboard items
+     * 
+     * @return ArrayDataProvider
+     */
+    public function getDataProvider() {
+        $configs = $this->getConfigs();
+        if (empty($configs)) {
+            throw new Exception("Configurations not found");
+        }
+        return new ArrayDataProvider([
+            'allModels' => $this->prepareConfig($configs),
+        ]);
+    }
+
+    /**
+     * Prepare config data before output
+     * 
+     * @param array $configs
+     * @return array
+     */
+    protected function prepareConfig($configs) {
+        $result = [];
+        foreach ($configs as $config) {
+            $result[] = [
+                'title' => $config['title'],
+                'routes' => $this->createRoutesDataProvider($config['routes']),
+            ];
+        }
+        return $result;
+    }
+
+    /**
+     * Create dataprovider from config routes
+     * 
+     * @param array $routes
+     * @return ArrayDataProvider
+     */
+    protected function createRoutesDataProvider($routes) {
+        if (empty($routes)) {
+            return;
+        }
+        foreach ($routes as &$route) {
+            $route['route'] = isset($this->routes[$route['route']]) ? $this->routes[$route['route']] : $route['route'];
+            $route['route'] = $this->dashboardId . '/' . $route['route'];
+            $route['icon'] = isset($route['icon']) ? $route['icon'] : $this->glyphiconDefault;
+        }
+        return new ArrayDataProvider([
+            'allModels' => $routes,
+        ]);
+    }
+
+    /**
      * Get routes list by config
      * 
      * @param array $config
@@ -129,6 +194,7 @@ class ConfigComponent extends Component {
         foreach ($config['routes'] as $route) {
             $module = $moduleName == self::APP_CONFIG_KEY ? '' : $moduleName . '/';
             $routes[$module . $route['route']] = $module . $route['route'];
+            $routes[$route['route']] = $module . $route['route'];
         }
         return $routes;
     }

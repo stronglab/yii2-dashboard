@@ -21,8 +21,8 @@ class UrlRule extends \yii\web\UrlRule {
      * @inheritdoc
      */
     public function init() {
-        $this->pattern = $this->dashboardId . '/route/<m>/<c>/<a>';
-        $this->route = $this->dashboardId . '/default/route';
+        $this->pattern = $this->dashboardId . '/<m>/<c>/<a>';
+        $this->route = $this->dashboardId . '/default/index';
         $this->defaults = [
             'a' => 0,
         ];
