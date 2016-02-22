@@ -76,4 +76,4 @@
 ### Особенности
 Вы можете использовать панель для отображения маршрутов вне модулей. Для этого необходимо создать файл dashboard.json в корневой директории приложения.
 
-[Created by strong aka Aleksand Demchenko](22info.ru)
+[Created by strong aka Aleksand Demchenko](http://22info.ru)
