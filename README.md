@@ -73,6 +73,40 @@
 * _**title**_ - обязательный параметр, необходим для отображения анкора ссылки в панели (если установлено _**false**_, то маршрут не выводится в панели)
 * _**icon**_ - необязательный параметр, иконка в панели. Используются иконки [Glyphicons](http://getbootstrap.com/components/#glyphicons). В параметре _**icon**_ необходимо вписать только название иконки (например, вместо "*glyphicon-pencil*"  используем "*pencil*")
 
+### Пример файла dashboard.json для стандартного CRUD
+```json
+{
+    "name": "Example",
+    "title": "Example Header",
+    "routes": [
+        {
+            "route": "default/admin",
+            "title": "Управление"
+        },
+        {
+            "route": "default/index",
+            "title": "Список"
+        },
+        {
+            "route": "default/create",
+            "title": "Добавить"
+        },
+        {
+            "route": "default/view",
+            "title": false
+        },
+        {
+            "route": "default/update",
+            "title": false
+        },
+        {
+            "route": "default/delete",
+            "title": false
+        }
+    ]
+}
+```
+
 ### Особенности
 Вы можете использовать панель для отображения маршрутов вне модулей. Для этого необходимо создать файл dashboard.json в корневой директории приложения.
 
