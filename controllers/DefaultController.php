@@ -32,7 +32,7 @@ class DefaultController extends Controller {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
         $controller[0]->layout = $alias . '/views/layouts/main';
-        return $controller[0]->run($action);
+        return $controller[0]->run($action, \Yii::$app->request->get());
     }
 
 }
