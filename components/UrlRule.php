@@ -38,9 +38,10 @@ class UrlRule extends \yii\web\UrlRule {
      * @return bool
      */
     public function createUrl($manager, $route, $params) {
-        if (Yii::$app->getModule($this->dashboardId)->config->isDashboardRoute($route)) {
-            $extRoute = Yii::$app->getModule($this->dashboardId)->config->getRoute($route);
-            return parent::createUrl($manager, $this->dashboardId . '/default/route', array_merge($params, $this->paramzRoute($extRoute)));
+        $customRoute = $this->prepareRoute($route);
+        if (Yii::$app->getModule($this->dashboardId)->config->isDashboardRoute($customRoute)) {
+            $extRoute = Yii::$app->getModule($this->dashboardId)->config->getRoute($customRoute);
+            return parent::createUrl($manager, $this->dashboardId . '/default/index', array_merge($params, $this->paramzRoute($extRoute)));
         }
         return parent::createUrl($manager, $route, $params);
     }
@@ -57,6 +58,25 @@ class UrlRule extends \yii\web\UrlRule {
         $c = isset($route[1]) ? $route[1] : 0;
         $a = isset($route[2]) ? $route[2] : 0;
         return ['m' => $m, 'c' => $c, 'a' => $a];
+    }
+
+    /**
+     * Prepare route for compare dashboard
+     * 
+     * @param string $route
+     * @return string
+     */
+    protected function prepareRoute($route) {
+        $getParam = \Yii::$app->request->get();
+        if (!isset($getParam['a'], $getParam['c'], $getParam['m'])) {
+            return $route;
+        }
+        if ($getParam['a'] === 0) {
+            $route = str_replace($this->dashboardId . '/default', $getParam['m'], $route);
+        } else {
+            $route = str_replace($this->dashboardId . '/default', $getParam['m'] . '/' . $getParam['c'], $route);
+        }
+        return $route;
     }
 
 }
