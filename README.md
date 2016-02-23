@@ -3,16 +3,15 @@
 
 ## Установка
 
-Прописать в composer.json Вашего проекта:
-### Секциия require-dev
 ```
-"stronglab/yii2-dashboard": "*"
+$ composer require --prefer-dist stronglab/yii2-dashboard "*"
 ```
-### Секция repositories
+Или добавить в composer.json
 ```
 {
-    "type": "git",
-    "url": "https://github.com/stronglab/yii2-dashboard"
+    "require": {
+        "stronglab/yii2-dashboard": "*"
+    }
 }
 ```
 ### Файл конфига проекта config/web.php
