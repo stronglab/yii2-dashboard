@@ -214,7 +214,6 @@ class ConfigComponent extends Component {
         foreach ($config['routes'] as $route) {
             $module = $moduleName == self::APP_CONFIG_KEY ? '' : $moduleName . '/';
             $routes[$module . $route['route']] = $module . $route['route'];
-            $routes[$route['route']] = $module . $route['route'];
         }
         return $routes;
     }
