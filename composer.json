@@ -3,6 +3,8 @@
     "description": "StrongLab Dashboard for apps",
     "homepage": "http://22info.ru",
     "type": "project",
+    "license": "BSD-3-Clause",
+    "minimum-stability": "stable",
     "authors": [
         {
             "name": "strong",
