@@ -1,3 +1,5 @@
+[![Latest Stable Version](https://poser.pugx.org/stronglab/yii2-dashboard/v/stable)](https://packagist.org/packages/stronglab/yii2-dashboard) [![Total Downloads](https://poser.pugx.org/stronglab/yii2-dashboard/downloads)](https://packagist.org/packages/stronglab/yii2-dashboard) [![Latest Unstable Version](https://poser.pugx.org/stronglab/yii2-dashboard/v/unstable)](https://packagist.org/packages/stronglab/yii2-dashboard) [![License](https://poser.pugx.org/stronglab/yii2-dashboard/license)](https://packagist.org/packages/stronglab/yii2-dashboard)
+
 # Yii2 Dashboard
 Создание простой панели управления для Yii2
 
