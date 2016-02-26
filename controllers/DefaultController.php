@@ -80,6 +80,7 @@ class DefaultController extends Controller {
                 $getParam[ConfigComponent::SECOND_SEGMENT] . (
                 $getParam[ConfigComponent::THIRD_SEGMENT] === 0 ? '' : '/' . $getParam[ConfigComponent::THIRD_SEGMENT]
                 );
+        
         if (!$this->module->config->isDashboardRoute($route)) {
             throw new NotFoundHttpException('The requested page does not exist.');
         }

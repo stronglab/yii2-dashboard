@@ -87,7 +87,8 @@ class ConfigComponent extends Component {
      * @return object
      */
     public function setModule($moduleName) {
-        $module = Yii::$app->getModule($moduleName, false);
+        $module = Yii::$app->getModule($moduleName);
+
         if (is_null($module)) {
             return $this;
         }
@@ -119,6 +120,7 @@ class ConfigComponent extends Component {
                 $this->_routes += $this->getRoutesList($config, $moduleName);
             }
         }
+
         return $this->_routes;
     }
 
@@ -168,10 +170,10 @@ class ConfigComponent extends Component {
      */
     protected function prepareConfig($configs) {
         $result = [];
-        foreach ($configs as $config) {
+        foreach ($configs as $module => $config) {
             $result[] = [
                 'title' => $config['title'],
-                'routes' => $this->createRoutesDataProvider($config['routes']),
+                'routes' => $this->createRoutesDataProvider($config['routes'], $module),
             ];
         }
         return $result;
@@ -183,17 +185,17 @@ class ConfigComponent extends Component {
      * @param array $routes
      * @return ArrayDataProvider
      */
-    protected function createRoutesDataProvider($routes) {
+    protected function createRoutesDataProvider($routes, $module) {
         if (empty($routes)) {
             return;
         }
         $result = [];
+        $prefix = ($module == self::APP_CONFIG_KEY) ? '' : $module . '/';
         foreach ($routes as $route) {
             if ($route['title'] === false) {
                 continue;
             }
-            $route['route'] = isset($this->routes[$route['route']]) ? $this->routes[$route['route']] : $route['route'];
-            $route['route'] = $this->dashboardId . '/' . $route['route'];
+            $route['route'] = $this->dashboardId . '/' . $prefix . $route['route'];
             $route['icon'] = isset($route['icon']) ? $route['icon'] : $this->glyphiconDefault;
             $result[] = $route;
         }
