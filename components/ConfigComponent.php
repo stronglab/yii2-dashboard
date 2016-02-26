@@ -240,7 +240,6 @@ class ConfigComponent extends Component {
      * @return array|bool config data or FALSE
      */
     protected function getConfig($configFile) {
-
         if (!file_exists($configFile)) {
             return false;
         }
