@@ -18,17 +18,6 @@ $ composer require --prefer-dist stronglab/yii2-dashboard "*"
 ```
 ### Файл конфига проекта config/web.php
 ```php
-'components' => [
-    'urlManager' => [
-        'enablePrettyUrl' => true,
-        'showScriptName' => false,
-        'rules' => [
-            [
-                'class' => 'stronglab\yii2\dashboard\components\UrlRule',
-            ],
-        ],
-    ],
-],
 'modules' => [
 'dashboard' => [
         'class' => 'stronglab\yii2\dashboard\Module',
