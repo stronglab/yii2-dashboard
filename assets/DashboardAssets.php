@@ -5,7 +5,7 @@
  * @author strong
  */
 
-namespace stronglab\yii2\dashboard\assets;
+namespace stronglab\dashboard\assets;
 
 use yii\web\AssetBundle;
 
@@ -24,7 +24,7 @@ class DashboardAssets extends AssetBundle
     ];
     
     public function init() {
-        $this->sourcePath = '@dashboard/web';
+        $this->sourcePath = '@stronglab/dashboard/web';
         parent::init();
     }
 }

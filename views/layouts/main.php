@@ -6,7 +6,7 @@ use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
-use stronglab\yii2\dashboard\assets\DashboardAssets;
+use stronglab\dashboard\assets\DashboardAssets;
 
 DashboardAssets::register($this);
 ?>

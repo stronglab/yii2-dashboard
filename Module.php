@@ -40,7 +40,7 @@ class Module extends \yii\base\Module {
         //set components
         $this->setComponents([
             'config' => [
-                'class' => 'stronglab\yii2\dashboard\components\ConfigComponent',
+                'class' => 'stronglab\dashboard\components\ConfigComponent',
                 'modules' => $this->modules,
                 'glyphiconDefault' => $this->glyphiconDefault,
                 'dashboardId' => $this->id,

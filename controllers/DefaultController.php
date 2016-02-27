@@ -5,14 +5,15 @@ namespace stronglab\dashboard\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use stronglab\yii2\dashboard\components\ConfigComponent;
+use stronglab\dashboard\components\ConfigComponent;
 
 /**
  * DefaultController
  *
  * @author strong
  */
-class DefaultController extends Controller {
+class DefaultController extends Controller
+{
 
     /**
      *
@@ -26,7 +27,8 @@ class DefaultController extends Controller {
      * @return string
      * @throws NotFoundHttpException
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
 
         if ($page = $this->getIndexPage()) {
             return $page;
@@ -46,7 +48,8 @@ class DefaultController extends Controller {
      * 
      * @inheritdoc
      */
-    public function getRoute() {
+    public function getRoute()
+    {
         if (is_null(Yii::$app->request->get(ConfigComponent::FIRST_SEGMENT)) && is_null(Yii::$app->request->get(ConfigComponent::SECOND_SEGMENT))) {
             return parent::getRoute();
         }
@@ -60,7 +63,8 @@ class DefaultController extends Controller {
      * @return array
      * @throws NotFoundHttpException
      */
-    protected function checkValidRoute() {
+    protected function checkValidRoute()
+    {
         $getParam = Yii::$app->request->get();
         if (!isset($getParam[ConfigComponent::FIRST_SEGMENT], $getParam[ConfigComponent::SECOND_SEGMENT], $getParam[ConfigComponent::THIRD_SEGMENT])) {
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -74,13 +78,14 @@ class DefaultController extends Controller {
      * @return string
      * @throws NotFoundHttpException
      */
-    protected function getDashboardRoute() {
+    protected function getDashboardRoute()
+    {
         $getParam = $this->checkValidRoute();
         $route = $getParam[ConfigComponent::FIRST_SEGMENT] . '/' .
                 $getParam[ConfigComponent::SECOND_SEGMENT] . (
                 $getParam[ConfigComponent::THIRD_SEGMENT] === 0 ? '' : '/' . $getParam[ConfigComponent::THIRD_SEGMENT]
                 );
-        
+
         if (!$this->module->config->isDashboardRoute($route)) {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
@@ -93,7 +98,8 @@ class DefaultController extends Controller {
      * 
      * @return boolean|string
      */
-    protected function getIndexPage() {
+    protected function getIndexPage()
+    {
         if (empty($_GET)) {
             $dataProvider = $this->module->config->getDataProvider();
             return $this->render('index', [
@@ -108,7 +114,8 @@ class DefaultController extends Controller {
      * 
      * @return string
      */
-    public function getActionName() {
+    public function getActionName()
+    {
         return (Yii::$app->request->get(ConfigComponent::THIRD_SEGMENT) === 0 ?
                         Yii::$app->request->get(ConfigComponent::SECOND_SEGMENT) :
                         Yii::$app->request->get(ConfigComponent::THIRD_SEGMENT)

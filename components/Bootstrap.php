@@ -15,8 +15,9 @@ class Bootstrap implements BootstrapInterface
     public function bootstrap($app)
     {
         $app->getUrlManager()->addRules([
-            'class' => 'stronglab\dashboard\components\UrlRule',
-            'dashboardId' => $app->id,
+            [
+                'class' => 'stronglab\dashboard\components\UrlRule'
+            ],
         ]);
     }
 
