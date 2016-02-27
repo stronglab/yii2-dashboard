@@ -18,7 +18,7 @@
     },
     "autoload": {
         "psr-4": {
-            "stronglab\\yii2\\dashboard\\": ""
+            "stronglab\\dashboard\\": ""
         }
     },
     "extra": {
