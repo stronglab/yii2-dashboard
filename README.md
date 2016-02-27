@@ -20,7 +20,7 @@ $ composer require --prefer-dist stronglab/yii2-dashboard "*"
 ```php
 'modules' => [
 'dashboard' => [
-        'class' => 'stronglab\yii2\dashboard\Module',
+        'class' => 'stronglab\dashboard\Module',
         'modules' => [
             // список модулей, в которых будет производиться поиск файла dashboard.json
         ],
@@ -69,10 +69,6 @@ $ composer require --prefer-dist stronglab/yii2-dashboard "*"
     "name": "Example",
     "title": "Example Header",
     "routes": [
-        {
-            "route": "default/admin",
-            "title": "Управление"
-        },
         {
             "route": "default/index",
             "title": "Список"
