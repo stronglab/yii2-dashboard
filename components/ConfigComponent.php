@@ -1,6 +1,6 @@
 <?php
 
-namespace stronglab\yii2\dashboard\components;
+namespace stronglab\dashboard\components;
 
 use Yii;
 use yii\base\Component;

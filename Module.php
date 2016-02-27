@@ -1,6 +1,6 @@
 <?php
 
-namespace stronglab\yii2\dashboard;
+namespace stronglab\dashboard;
 
 /**
  * @author strong

@@ -2,7 +2,8 @@
     "name": "stronglab/yii2-dashboard",
     "description": "StrongLab Dashboard for apps",
     "homepage": "http://22info.ru",
-    "type": "project",
+    "type": "yii2-extension",
+    "keywords": ["yii2", "extension"],
     "license": "BSD-3-Clause",
     "minimum-stability": "stable",
     "authors": [
@@ -19,5 +20,8 @@
         "psr-4": {
             "stronglab\\yii2\\dashboard\\": ""
         }
+    },
+    "extra": {
+        "bootstrap": "stronglab\\dashboard\\components\\Bootstrap"
     }
 }
