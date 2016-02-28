@@ -125,6 +125,7 @@ class DefaultController extends Controller
             $dataProvider = $this->module->config->getDataProvider();
             return $this->render('index', [
                 'dataProvider' => $dataProvider,
+                'column' => $this->module->column,
             ]);
         }
         return false;

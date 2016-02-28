@@ -101,18 +101,36 @@ a.desc:after {
     overflow: hidden;
     cursor: pointer;
 }
+
 .dashboard-ico-block:hover {
     background: #EEE;
 }
+
 .dashboard-ico-block:hover span {
     color: maroon;
 }
+
 .dashboard-ico-block span {
     display: inline-block;
     font-size: 93px;
     color: #999;
 }
+
 .dashboard-ico-block a {
     color: #333;
     text-decoration: none;
+}
+
+.module-list-1 > div {
+    width: 100%;
+}
+
+.module-list-2 > div {
+    width: 50%;
+    float: left;
+}
+
+.module-list-3 > div {
+    width: 33%;
+    float: left;
 }

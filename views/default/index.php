@@ -1,6 +1,7 @@
 <?php
 
 use yii\widgets\ListView;
+
 ?>
 <div class="dashboard-default-index">
     <?php
@@ -9,6 +10,8 @@ use yii\widgets\ListView;
         'dataProvider' => $dataProvider,
         'itemView' => '_modules',
         'summary' => '',
+        'options' => ['class' => 'module-list-' . $column],
     ]);
     ?>
+    <div class="clearfix"></div>
 </div>

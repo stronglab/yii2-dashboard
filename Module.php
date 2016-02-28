@@ -13,6 +13,11 @@ class Module extends \yii\base\Module
     public $roles = ['?'];
 
     /**
+     * @var int dashboard column num
+     */
+    public $column = 1;
+
+    /**
      *
      * @var string Alias for module
      */
