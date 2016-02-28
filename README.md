@@ -21,6 +21,7 @@ $ composer require --prefer-dist stronglab/yii2-dashboard "*"
 'modules' => [
 'dashboard' => [
         'class' => 'stronglab\dashboard\Module',
+        'roles' => ['@'], // необязатьельный параметр, по-умолчанию доступ всем гостям.
         'modules' => [
             // список модулей, в которых будет производиться поиск файла dashboard.json
         ],
