@@ -5,18 +5,24 @@ namespace stronglab\dashboard;
 /**
  * @author strong
  */
-class Module extends \yii\base\Module {
+class Module extends \yii\base\Module
+{
+    /**
+     * @var array Allowed roles. Guest by default
+     */
+    public $roles = ['?'];
 
     /**
-     * 
+     *
      * @var string Alias for module
      */
     public $alias = '@dashboard';
 
     /**
-     * 
+     *
      * @var string Default icon for dashboard
      */
+
     public $glyphiconDefault = 'cog';
 
     /**
@@ -28,7 +34,8 @@ class Module extends \yii\base\Module {
     /**
      * @inheritdoc
      */
-    public function init() {
+    public function init()
+    {
 
         parent::init();
 

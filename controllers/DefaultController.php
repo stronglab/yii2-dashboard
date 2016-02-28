@@ -6,6 +6,7 @@ use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use stronglab\dashboard\components\ConfigComponent;
+use yii\filters\AccessControl;
 
 /**
  * DefaultController
@@ -17,13 +18,33 @@ class DefaultController extends Controller
 
     /**
      *
-     * @var string Custom layout for dashboard 
+     * @var string Custom layout for dashboard
      */
     public $layout = 'main';
 
     /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index'],
+                        'roles' => $this->module->roles,
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
      * Dashboard index action
-     * 
+     *
      * @return string
      * @throws NotFoundHttpException
      */
@@ -37,7 +58,7 @@ class DefaultController extends Controller
         $route = $this->getDashboardRoute();
         $action = $this->getActionName();
         $controller = Yii::$app->createController($route);
-        if (!isset($controller[0]) and ! ($controller[0] instanceof \yii\base\Controller)) {
+        if (!isset($controller[0]) and !($controller[0] instanceof \yii\base\Controller)) {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
         $controller[0]->layout = $this->module->alias . '/views/layouts/main';
@@ -45,7 +66,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * 
+     *
      * @inheritdoc
      */
     public function getRoute()
@@ -59,7 +80,7 @@ class DefaultController extends Controller
 
     /**
      * Check valid request for dashboard
-     * 
+     *
      * @return array
      * @throws NotFoundHttpException
      */
@@ -74,7 +95,7 @@ class DefaultController extends Controller
 
     /**
      * Get current dshboard route
-     * 
+     *
      * @return string
      * @throws NotFoundHttpException
      */
@@ -82,9 +103,9 @@ class DefaultController extends Controller
     {
         $getParam = $this->checkValidRoute();
         $route = $getParam[ConfigComponent::FIRST_SEGMENT] . '/' .
-                $getParam[ConfigComponent::SECOND_SEGMENT] . (
-                $getParam[ConfigComponent::THIRD_SEGMENT] === 0 ? '' : '/' . $getParam[ConfigComponent::THIRD_SEGMENT]
-                );
+            $getParam[ConfigComponent::SECOND_SEGMENT] . (
+            $getParam[ConfigComponent::THIRD_SEGMENT] === 0 ? '' : '/' . $getParam[ConfigComponent::THIRD_SEGMENT]
+            );
 
         if (!$this->module->config->isDashboardRoute($route)) {
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -95,7 +116,7 @@ class DefaultController extends Controller
 
     /**
      * Return index page or false
-     * 
+     *
      * @return boolean|string
      */
     protected function getIndexPage()
@@ -103,7 +124,7 @@ class DefaultController extends Controller
         if (empty($_GET)) {
             $dataProvider = $this->module->config->getDataProvider();
             return $this->render('index', [
-                        'dataProvider' => $dataProvider,
+                'dataProvider' => $dataProvider,
             ]);
         }
         return false;
@@ -111,15 +132,15 @@ class DefaultController extends Controller
 
     /**
      * Get Action name from url
-     * 
+     *
      * @return string
      */
     public function getActionName()
     {
         return (Yii::$app->request->get(ConfigComponent::THIRD_SEGMENT) === 0 ?
-                        Yii::$app->request->get(ConfigComponent::SECOND_SEGMENT) :
-                        Yii::$app->request->get(ConfigComponent::THIRD_SEGMENT)
-                );
+            Yii::$app->request->get(ConfigComponent::SECOND_SEGMENT) :
+            Yii::$app->request->get(ConfigComponent::THIRD_SEGMENT)
+        );
     }
 
 }
