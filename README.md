@@ -19,7 +19,7 @@ $ composer require --prefer-dist stronglab/yii2-dashboard "*"
 ### Файл конфига проекта config/web.php
 ```php
 'modules' => [
-'dashboard' => [
+    'dashboard' => [
         'class' => 'stronglab\dashboard\Module',
         'roles' => ['@'], // необязатьельный параметр, по-умолчанию доступ всем гостям.
         'modules' => [
