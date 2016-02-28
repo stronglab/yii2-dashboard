@@ -13,10 +13,11 @@ use yii\data\ArrayDataProvider;
  *
  * @author strong
  */
-class ConfigComponent extends Component {
+class ConfigComponent extends Component
+{
 
     /**
-     * Non-module dashboard configuration key in configs array 
+     * Non-module dashboard configuration key in configs array
      */
     const APP_CONFIG_KEY = '_application';
 
@@ -36,7 +37,7 @@ class ConfigComponent extends Component {
     const THIRD_SEGMENT = '__T';
 
     /**
-     * 
+     *
      * @var string Default icon for dashboard
      */
     public $glyphiconDefault = 'cog';
@@ -55,14 +56,15 @@ class ConfigComponent extends Component {
 
     /**
      *
-     * @var array available routes 
+     * @var array available routes
      */
     private $_routes = [];
 
     /**
      * @inheritdoc
      */
-    public function init() {
+    public function init()
+    {
         parent::init();
         $this->addApplicationConfig();
     }
@@ -71,28 +73,40 @@ class ConfigComponent extends Component {
      * Validate and set available modules for dashboard
      *
      * @param array $moduleNames
-     * @return object 
+     * @return object
      */
-    public function setModules(array $moduleNames) {
-        foreach ($moduleNames as $moduleName) {
-            $this->setModule($moduleName);
+    public function setModules(array $moduleNames)
+    {
+        foreach ($moduleNames as $key => $module) {
+            if (is_array($module)) {
+                $this->setModule($key, $module);
+            } else {
+                $this->setModule($module);
+            }
+
         }
         return $this;
     }
 
     /**
      * Validate and set available module for dashboard
-     * 
+     *
      * @param string $moduleName
      * @return object
      */
-    public function setModule($moduleName) {
+    public function setModule($moduleName, $options = [])
+    {
         $module = Yii::$app->getModule($moduleName);
 
         if (is_null($module)) {
             return $this;
         }
-        $configFile = $module->getBasePath() . '/dashboard.json';
+        if (!empty($options) && isset($options['jsonPath'])) {
+            $options['jsonPath'] = (substr($options['jsonPath'], 0, 1) == '/') ? substr($options['jsonPath'], 1) : $options['jsonPath'];
+            $configFile = Yii::getAlias('@app') . '/' . $options['jsonPath'];
+        } else {
+            $configFile = $module->getBasePath() . '/dashboard.json';
+        }
         $config = $this->getConfig($configFile);
         if ($config !== false) {
             $this->_configs[$moduleName] = $config;
@@ -102,19 +116,21 @@ class ConfigComponent extends Component {
 
     /**
      * Get available dashbord modules config
-     * 
+     *
      * @return array
      */
-    public function getConfigs() {
+    public function getConfigs()
+    {
         return $this->_configs;
     }
 
     /**
      * Get All dashboard routes
-     * 
+     *
      * @return array
      */
-    public function getRoutes() {
+    public function getRoutes()
+    {
         if (empty($this->_routes)) {
             foreach ($this->_configs as $moduleName => $config) {
                 $this->_routes += $this->getRoutesList($config, $moduleName);
@@ -126,21 +142,23 @@ class ConfigComponent extends Component {
 
     /**
      * Check is dashboard route
-     * 
+     *
      * @param string $route
      * @return bool
      */
-    public function isDashboardRoute($route) {
+    public function isDashboardRoute($route)
+    {
         return isset($this->routes[$route]);
     }
 
     /**
      * Get full route
-     * 
+     *
      * @param string $route
      * @return string|null
      */
-    public function getRoute($route) {
+    public function getRoute($route)
+    {
         if ($this->isDashboardRoute($route)) {
             return $this->_routes[$route];
         }
@@ -149,10 +167,11 @@ class ConfigComponent extends Component {
 
     /**
      * Return data provider for bulid dashboard items
-     * 
+     *
      * @return ArrayDataProvider
      */
-    public function getDataProvider() {
+    public function getDataProvider()
+    {
         $configs = $this->getConfigs();
         if (empty($configs)) {
             throw new Exception("Configurations not found");
@@ -164,11 +183,12 @@ class ConfigComponent extends Component {
 
     /**
      * Prepare config data before output
-     * 
+     *
      * @param array $configs
      * @return array
      */
-    protected function prepareConfig($configs) {
+    protected function prepareConfig($configs)
+    {
         $result = [];
         foreach ($configs as $module => $config) {
             $result[] = [
@@ -181,11 +201,12 @@ class ConfigComponent extends Component {
 
     /**
      * Create dataprovider from config routes
-     * 
+     *
      * @param array $routes
      * @return ArrayDataProvider
      */
-    protected function createRoutesDataProvider($routes, $module) {
+    protected function createRoutesDataProvider($routes, $module)
+    {
         if (empty($routes)) {
             return;
         }
@@ -206,12 +227,13 @@ class ConfigComponent extends Component {
 
     /**
      * Get routes list by config
-     * 
+     *
      * @param array $config
      * @param string $moduleName
      * @return array
      */
-    protected function getRoutesList($config, $moduleName) {
+    protected function getRoutesList($config, $moduleName)
+    {
         $routes = [];
         foreach ($config['routes'] as $route) {
             $module = $moduleName == self::APP_CONFIG_KEY ? '' : $moduleName . '/';
@@ -222,10 +244,11 @@ class ConfigComponent extends Component {
 
     /**
      * Add base application dashboard config
-     * 
+     *
      * @return null
      */
-    protected function addApplicationConfig() {
+    protected function addApplicationConfig()
+    {
         $configFile = Yii::getAlias('@app') . '/dashboard.json';
         $config = $this->getConfig($configFile);
         if ($config !== false) {
@@ -235,11 +258,12 @@ class ConfigComponent extends Component {
 
     /**
      * Get dashboard config
-     * 
+     *
      * @param string $configFile
      * @return array|bool config data or FALSE
      */
-    protected function getConfig($configFile) {
+    protected function getConfig($configFile)
+    {
         if (!file_exists($configFile)) {
             return false;
         }
@@ -253,11 +277,12 @@ class ConfigComponent extends Component {
 
     /**
      * Validate dashboard config
-     * 
+     *
      * @param array $config
      * @return null
      */
-    protected function validateConfig($config) {
+    protected function validateConfig($config)
+    {
         if (!isset($config['name'])) {
             throw new Exception("Syntax error: field 'name' is required");
         }
@@ -279,11 +304,12 @@ class ConfigComponent extends Component {
 
     /**
      * Filter config params
-     * 
+     *
      * @param array $config
      * @return array
      */
-    protected function filterConfig($config) {
+    protected function filterConfig($config)
+    {
         if (!isset($config['title'])) {
             $config['title'] = $config['name'];
         }
