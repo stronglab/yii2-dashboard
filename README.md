@@ -20,12 +20,19 @@ $ composer require --prefer-dist stronglab/yii2-dashboard "*"
 ```php
 'modules' => [
     'dashboard' => [
-        'class' => 'stronglab\dashboard\Module',
-        'roles' => ['@'], // необязатьельный параметр, по-умолчанию доступ всем гостям.
-        'modules' => [
-            // список модулей, в которых будет производиться поиск файла dashboard.json
-        ],
-    ],
+                'class' => 'stronglab\dashboard\Module',
+                'roles' => ['@'], // необязатьельный параметр, по-умолчанию доступ всем гостям
+                'column' => 2, // необязательный параметр, количество столбцов в панели (возможные значения: 1-3)
+                'modules' => [
+                    // список модулей, в которых будет производиться поиск файла dashboard.json
+                    'moduleID',
+                    'moduleID',
+                    ...
+                    'moduleID' => [
+                        'jsonPath' => 'config/dashboard/myconf.json', // отдельный путь к файлу настроек панели, прописывается от директории приложения
+                    ],
+                ],
+            ],
 ],
 ```
 Далее обновляем composer и можно приступать к настройке модулей
