@@ -216,7 +216,7 @@ class ConfigComponent extends Component
             if ($route['title'] === false) {
                 continue;
             }
-            $route['route'] = $this->dashboardId . '/' . $prefix . $route['route'];
+            $route['route'] = $prefix . $route['route'];
             $route['icon'] = isset($route['icon']) ? $route['icon'] : $this->glyphiconDefault;
             $result[] = $route;
         }
