@@ -6,6 +6,7 @@ use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
+use yii\helpers\Url;
 use stronglab\dashboard\assets\DashboardAssets;
 
 DashboardAssets::register($this);
@@ -13,50 +14,53 @@ DashboardAssets::register($this);
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
-    <head>
-        <meta charset="<?= Yii::$app->charset ?>">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <?= Html::csrfMetaTags() ?>
-        <title><?= Html::encode($this->title) ?></title>
-        <?php $this->head() ?>
-    </head>
-    <body>
-        <?php $this->beginBody() ?>
+<head>
+    <meta charset="<?= Yii::$app->charset ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <?= Html::csrfMetaTags() ?>
+    <title><?= Html::encode($this->title) ?></title>
+    <?php $this->head() ?>
+</head>
+<body>
+<?php $this->beginBody() ?>
 
-        <div class="wrap">
+<div class="wrap">
+    <?php
+    NavBar::begin([
+        'brandLabel' => 'Dashboard',
+        'brandUrl' => Url::toRoute('/' . Yii::$app->controller->module->id),
+        'options' => [
+            'class' => 'navbar-inverse navbar-fixed-top',
+        ],
+    ]);
+    echo Nav::widget([
+        'options' => ['class' => 'navbar-nav navbar-right'],
+        'items' => [
+        ],
+    ]);
+    NavBar::end();
+    ?>
+
+    <div class="container">
+        <?php if (isset($this->params['breadcrumbs'])): ?>
             <?php
-            NavBar::begin([
-                'brandLabel' => 'Dashboard',
-                'brandUrl' => '#',
-                'options' => [
-                    'class' => 'navbar-inverse navbar-fixed-top',
-                ],
+            array_splice($this->params['breadcrumbs'], 0, 0, [['label' => 'Dashboard', 'url' => Url::toRoute('/' . Yii::$app->controller->module->id)]]);
+            echo Breadcrumbs::widget([
+                'links' => $this->params['breadcrumbs'],
             ]);
-            echo Nav::widget([
-                'options' => ['class' => 'navbar-nav navbar-right'],
-                'items' => [
-                ],
-            ]);
-            NavBar::end();
             ?>
+        <?php endif; ?>
+        <?= $content ?>
+    </div>
+</div>
 
-            <div class="container">
-                <?=
-                Breadcrumbs::widget([
-                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-                ])
-                ?>
-                <?= $content ?>
-            </div>
-        </div>
+<footer class="footer">
+    <div class="container">
+        <p class="pull-left"></p>
+    </div>
+</footer>
 
-        <footer class="footer">
-            <div class="container">
-                <p class="pull-left"></p>
-            </div>
-        </footer>
-
-        <?php $this->endBody() ?>
-    </body>
+<?php $this->endBody() ?>
+</body>
 </html>
 <?php $this->endPage() ?>
