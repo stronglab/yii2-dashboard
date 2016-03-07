@@ -151,6 +151,11 @@ class ConfigComponent extends Component
         return isset($this->routes[$route]);
     }
 
+    public function isDashboardCall()
+    {
+        return !is_null(Yii::$app->controller->module) ? (Yii::$app->controller->module->id === $this->dashboardId) : false;
+    }
+
     /**
      * Get full route
      *

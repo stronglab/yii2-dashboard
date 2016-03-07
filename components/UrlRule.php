@@ -40,7 +40,7 @@ class UrlRule extends \yii\web\UrlRule {
      */
     public function createUrl($manager, $route, $params) {
         $customRoute = $this->prepareRoute($route);
-        if (Yii::$app->getModule($this->dashboardId)->config->isDashboardRoute($customRoute)) {
+        if (Yii::$app->getModule($this->dashboardId)->config->isDashboardRoute($customRoute) && Yii::$app->getModule($this->dashboardId)->config->isDashboardCall()) {
             $extRoute = Yii::$app->getModule($this->dashboardId)->config->getRoute($customRoute);
             return parent::createUrl($manager, $this->dashboardId . '/default/index', array_merge($params, $this->paramzRoute($extRoute)));
         }
