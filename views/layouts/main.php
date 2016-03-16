@@ -36,6 +36,7 @@ DashboardAssets::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
+            ['label' => 'На сайт', 'url' => Yii::$app->homeUrl, 'linkOptions' => ['target' => '_blank']],
         ],
     ]);
     NavBar::end();
