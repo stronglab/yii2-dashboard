@@ -8,6 +8,7 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use yii\helpers\Url;
 use stronglab\dashboard\assets\DashboardAssets;
+use stronglab\dashboard\Module;
 
 DashboardAssets::register($this);
 ?>
@@ -36,7 +37,7 @@ DashboardAssets::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'На сайт', 'url' => Yii::$app->homeUrl, 'linkOptions' => ['target' => '_blank']],
+            ['label' => Module::t('gohome'), 'url' => Yii::$app->homeUrl, 'linkOptions' => ['target' => '_blank']],
         ],
     ]);
     NavBar::end();
