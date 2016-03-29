@@ -52,6 +52,11 @@ DashboardAssets::register($this);
             ]);
             ?>
         <?php endif; ?>
+        <?php
+        foreach (Yii::$app->session->getAllFlashes() as $key => $message) {
+            echo '<div class="alert alert-' . $key . '">' . $message . '</div>';
+        }
+        ?>
         <?= $content ?>
     </div>
 </div>
