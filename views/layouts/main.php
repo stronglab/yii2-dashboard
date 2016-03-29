@@ -9,6 +9,7 @@ use yii\widgets\Breadcrumbs;
 use yii\helpers\Url;
 use stronglab\dashboard\assets\DashboardAssets;
 use stronglab\dashboard\Module;
+use kartik\alert\AlertBlock;
 
 DashboardAssets::register($this);
 ?>
@@ -52,10 +53,10 @@ DashboardAssets::register($this);
             ]);
             ?>
         <?php endif; ?>
-        <?php
-        foreach (Yii::$app->session->getAllFlashes() as $key => $message) {
-            echo '<div class="alert alert-' . $key . '">' . $message . '</div>';
-        }
+        <?= AlertBlock::widget([
+            'type' => AlertBlock::TYPE_ALERT,
+            'useSessionFlash' => true,
+        ]);
         ?>
         <?= $content ?>
     </div>
