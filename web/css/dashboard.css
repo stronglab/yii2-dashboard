@@ -73,7 +73,11 @@ a.desc:after {
 }
 
 .grid-view th {
-    white-space: nowrap;
+    /*white-space: nowrap;*/
+}
+
+.table > thead > tr > th {
+    vertical-align: middle !important;
 }
 
 .hint-block {

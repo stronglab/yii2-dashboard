@@ -44,7 +44,7 @@ DashboardAssets::register($this);
     NavBar::end();
     ?>
 
-    <div class="container">
+    <div class="container-fluid">
         <?php if (isset($this->params['breadcrumbs'])): ?>
             <?php
             array_splice($this->params['breadcrumbs'], 0, 0, [['label' => 'Dashboard', 'url' => Url::toRoute('/' . Yii::$app->controller->module->id)]]);
