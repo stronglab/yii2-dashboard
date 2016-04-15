@@ -80,6 +80,10 @@ a.desc:after {
     vertical-align: middle !important;
 }
 
+.container-fluid {
+    padding-top: 70px;
+}
+
 .hint-block {
     display: block;
     margin-top: 5px;
